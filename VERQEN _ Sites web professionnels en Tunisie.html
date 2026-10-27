@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>VERQEN | Sites web professionnels en Tunisie</title>
+<meta name="description" content="VERQEN crée votre site web professionnel à partir de 500 TND. Restaurants, boutiques, cliniques et services locaux.">
+<style>
+:root{--ink:#e6edf7;--muted:#97a6bd;--card:rgba(10,16,28,.66);--line:rgba(255,255,255,.1);--accent:#2dd4bf}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#05070d;color:var(--ink);font-family:"Inter","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+#scene{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none;display:block}
+.progress{position:fixed;left:0;top:0;height:2px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,#2dd4bf,#8b5cf6,#f59e0b);z-index:20}
+header{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 6vw;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.logo{font-weight:800;letter-spacing:.24em;font-size:15px;text-decoration:none;color:var(--ink)}
+.nav-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.nav-link{color:var(--muted);text-decoration:none;font-size:14px;margin-right:8px}
+.nav-link:hover{color:var(--ink)}
+main{position:relative;z-index:1}
+section{min-height:100vh;display:flex;align-items:center;padding:110px 6vw 80px}
+.wrap{width:100%;max-width:1200px;margin:0 auto}
+.brand{font-size:clamp(64px,13vw,190px);font-weight:900;letter-spacing:.02em;line-height:.9;background:linear-gradient(120deg,#fff 10%,#2dd4bf 45%,#8b5cf6 90%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.subtitle{font-size:clamp(18px,2.2vw,24px);color:var(--muted);margin-top:22px;max-width:520px}
+.hint{margin-top:56px;display:inline-flex;align-items:center;gap:12px;color:var(--muted);font-size:14px;letter-spacing:.08em;text-transform:uppercase}
+.arrow{display:inline-block;animation:bob 1.6s ease-in-out infinite;color:var(--accent)}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+.split{justify-content:flex-start}
+.split.right{justify-content:flex-end}
+.split.center{justify-content:center;text-align:center}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:34px;max-width:480px;width:100%;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.card h2{font-size:clamp(28px,3.4vw,42px);line-height:1.15;font-weight:800;margin-bottom:14px}
+.card p{color:var(--muted)}
+.eyebrow{display:inline-block;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+.list{list-style:none;margin-top:22px;display:grid;gap:12px}
+.list li{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.03)}
+.list li::before{content:"";width:8px;height:8px;border-radius:50%;flex:0 0 8px;background:var(--accent);box-shadow:0 0 12px var(--accent)}
+.reason{display:flex;gap:16px;margin-top:22px}
+.reason .num{font-size:14px;font-weight:700;color:var(--accent);min-width:34px;padding-top:3px}
+.reason h3{font-size:18px;margin-bottom:4px}
+.reason p{font-size:15px}
+.reveal{opacity:0;transform:translateX(var(--dx,0)) translateY(24px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
+.reveal.from-left{--dx:-70px}
+.reveal.from-right{--dx:70px}
+.reveal.in{opacity:1;transform:none}
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,380px));gap:26px;justify-content:center;width:100%;margin-top:40px}
+.plan{text-align:left;position:relative}
+.plan.featured{border-color:rgba(139,92,246,.6);box-shadow:0 0 50px rgba(139,92,246,.22)}
+.badge{position:absolute;top:-12px;right:24px;font-size:12px;font-weight:700;padding:5px 12px;border-radius:999px;background:linear-gradient(135deg,#8b5cf6,#2dd4bf);color:#05070d}
+.plan-name{font-size:18px;font-weight:700;color:var(--muted);letter-spacing:.04em}
+.price{font-size:52px;font-weight:800;margin:8px 0 4px}
+.price small{font-size:18px;color:var(--muted);font-weight:600;margin-left:6px}
+.plan ul{list-style:none;margin:20px 0 28px;display:grid;gap:10px;color:var(--muted)}
+.plan ul li::before{content:"✓";color:var(--accent);margin-right:10px;font-weight:700}
+.plan .btn{width:100%}
+.contact-actions{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:30px}
+.tel-line{margin-top:22px;color:var(--muted)}
+.tel-line a{color:var(--ink);font-weight:700;text-decoration:none;border-bottom:1px solid var(--accent)}
+.footer-inner{width:100%;max-width:1200px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center}
+.footer-inner p{color:var(--muted);font-size:14px}
+.copy{font-size:13px;color:#5d6b82;margin-top:10px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border-radius:999px;border:0;cursor:pointer;background:linear-gradient(135deg,#2dd4bf,#8b5cf6);color:#05070d;font-weight:700;font-size:15px;text-decoration:none;font-family:inherit;transition:transform .2s ease,box-shadow .2s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(45,212,191,.25)}
+.btn:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn-ghost:hover{box-shadow:none;border-color:rgba(255,255,255,.25)}
+.btn-wa{background:#25d366;color:#04140a}
+.btn-wa:hover{box-shadow:0 12px 30px rgba(37,211,102,.3)}
+.btn-sm{padding:9px 16px;font-size:14px}
+@media (max-width:760px){
+  header{padding:14px 5vw}
+  .nav-link{display:none}
+  section{padding:100px 5vw 60px}
+  .card{padding:26px;background:rgba(10,16,28,.74)}
+  .split,.split.right{justify-content:center}
+  .split.right .wrap{display:flex;justify-content:center}
+}
+@media (prefers-reduced-motion: reduce){
+  .reveal{transition:none;opacity:1;transform:none}
+  .arrow{animation:none}
+}
+</style>
+</head>
+<body>
+
+<canvas id="scene" aria-hidden="true"></canvas>
+<div class="progress" id="progress"></div>
+
+<header>
+  <a href="#hero" class="logo">VERQEN</a>
+  <nav class="nav-actions">
+    <a class="nav-link" href="#services">Services</a>
+    <a class="nav-link" href="#tarifs">Tarifs</a>
+    <a class="nav-link" href="#contact">Contact</a>
+    <a class="btn btn-ghost btn-sm" href="tel:+21658936404">Call us</a>
+    <a class="btn btn-wa btn-sm" href="https://wa.me/21658936404" target="_blank" rel="noopener">WhatsApp</a>
+  </nav>
+</header>
+
+<main>
+
+  <section id="hero">
+    <div class="wrap">
+      <h1 class="brand">VERQEN</h1>
+      <p class="subtitle">Votre site web professionnel, à partir de 500 TND.</p>
+      <div class="hint">Défiler pour découvrir <span class="arrow">↓</span></div>
+    </div>
+  </section>
+
+  <section id="services" class="split">
+    <div class="wrap">
+      <div class="card reveal from-left">
+        <span class="eyebrow">Nos services</span>
+        <h2>Ce que nous construisons</h2>
+        <p>Des sites qui ressemblent à votre activité et qui vous amènent de nouveaux clients.</p>
+        <ul class="list">
+          <li>Sites vitrine</li>
+          <li>Boutiques en ligne</li>
+          <li>Sites pour restaurants</li>
+          <li>Cliniques et services locaux</li>
+          <li>Landing pages</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="pourquoi" class="split right">
+    <div class="wrap" style="display:flex;justify-content:flex-end">
+      <div class="card reveal from-right">
+        <span class="eyebrow">Pourquoi VERQEN</span>
+        <h2>Un partenaire, pas juste un prestataire</h2>
+        <div class="reason"><div class="num">01</div><div><h3>Livraison rapide</h3><p>Votre site prêt en quelques jours, sans vous faire attendre.</p></div></div>
+        <div class="reason"><div class="num">02</div><div><h3>Design moderne adapté au mobile</h3><p>Une présentation claire sur téléphone, tablette et ordinateur.</p></div></div>
+        <div class="reason"><div class="num">03</div><div><h3>Accompagnement après la mise en ligne</h3><p>On reste à vos côtés pour les modifications et le suivi.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tarifs" class="split center">
+    <div class="wrap">
+      <span class="eyebrow reveal">Nos tarifs</span>
+      <h2 class="reveal" style="font-size:clamp(30px,4vw,48px);font-weight:800">Des prix clairs, sans surprise</h2>
+      <div class="plans">
+        <div class="card plan reveal">
+          <div class="plan-name">Essentiel</div>
+          <div class="price">500<small>TND</small></div>
+          <p>Idéal pour bien démarrer en ligne.</p>
+          <ul>
+            <li>Jusqu'à 3 pages</li>
+            <li>Design adapté au mobile</li>
+            <li>Formulaire de contact</li>
+            <li>Mise en ligne incluse</li>
+          </ul>
+          <a class="btn btn-ghost" href="https://wa.me/21658936404?text=Bonjour%20VERQEN%2C%20je%20souhaite%20le%20forfait%20Essentiel" target="_blank" rel="noopener">Choisir Essentiel</a>
+        </div>
+        <div class="card plan featured reveal">
+          <span class="badge">Le plus choisi</span>
+          <div class="plan-name">Premium</div>
+          <div class="price">700<small>TND</small></div>
+          <p>Pour une présence complète et plus professionnelle.</p>
+          <ul>
+            <li>Jusqu'à 7 pages</li>
+            <li>Galerie photo et réseaux sociaux</li>
+            <li>Référencement Google de base</li>
+            <li>Un mois de support prioritaire</li>
+          </ul>
+          <a class="btn" href="https://wa.me/21658936404?text=Bonjour%20VERQEN%2C%20je%20souhaite%20le%20forfait%20Premium" target="_blank" rel="noopener">Choisir Premium</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="split center">
+    <div class="wrap">
+      <div class="card reveal" style="margin:0 auto">
+        <span class="eyebrow">Contact</span>
+        <h2>Prêt à lancer votre site ?</h2>
+        <p>Appelez-nous ou écrivez-nous sur WhatsApp, on vous répond rapidement.</p>
+        <div class="contact-actions">
+          <a class="btn" href="tel:+21658936404">Call us</a>
+          <a class="btn btn-wa" href="https://wa.me/21658936404" target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+        <p class="tel-line">Ou au <a href="tel:+21658936404">58 936 404</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="footer">
+    <div class="footer-inner">
+      <a href="#hero" class="logo" style="font-size:18px">VERQEN</a>
+      <p>Sites web professionnels pour les entreprises tunisiennes.</p>
+      <p><a href="tel:+21658936404" style="color:var(--ink);text-decoration:none">58 936 404</a></p>
+      <p class="copy">© 2026 VERQEN. Tous droits réservés.</p>
+    </div>
+  </section>
+
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+  const canvas = document.getElementById('scene');
+  const progressEl = document.getElementById('progress');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.2 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  if (typeof THREE === 'undefined') { canvas.style.display = 'none'; return; }
+  let renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  } catch (err) { canvas.style.display = 'none'; return; }
+  renderer.setClearColor(0x000000, 0);
+  renderer.autoClear = false;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.1;
+  renderer.outputEncoding = THREE.sRGBEncoding;
+
+  // Animated black hole background: screen-space gravitational lensing, accretion disk with Doppler beaming, starfield
+  // Space background based on the Natural History Museum's "What is space?" article:
+  // the Milky Way band with dust lanes, nebulae, a spiral galaxy, and a gas giant
+  const SPACE_FRAG = `
+precision highp float;
+uniform float uTime;
+uniform float uProg;
+uniform vec2 uRes;
+varying vec2 vUv;
+float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }
+float noise(vec2 p){
+  vec2 i = floor(p); vec2 f = fract(p); f = f * f * (3.0 - 2.0 * f);
+  return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x), mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y);
+}
+float fbm(vec2 p){ float v = 0.0; float a = 0.5; for (int i = 0; i < 5; i++){ v += a * noise(p); p *= 2.03; a *= 0.5; } return v; }
+float stars(vec2 uv, float scale, float density){
+  vec2 g = floor(uv * scale); vec2 f = fract(uv * scale);
+  float h = hash(g);
+  vec2 pos = vec2(hash(g + 1.7), hash(g + 3.1));
+  float d = length(f - pos);
+  float s = smoothstep(0.08, 0.0, d) * step(density, h);
+  return s * (0.35 + 0.65 * hash(g + 9.0));
+}
+void main(){
+  vec2 p = (vUv - 0.5) * vec2(uRes.x / uRes.y, 1.0) * 2.0;
+  p += vec2(uProg * 0.5, uProg * 0.15);
+  float t = uTime * 0.02;
+
+  // Milky Way: a diagonal band of dense stars and dark dust lanes
+  float a = -0.5;
+  vec2 q = vec2(cos(a) * p.x - sin(a) * p.y, sin(a) * p.x + cos(a) * p.y);
+  float band = exp(-q.y * q.y * 2.2);
+  float lanes = mix(0.2, 1.0, smoothstep(0.3, 0.65, fbm(p * 4.0 + vec2(5.0, t))));
+  vec3 milky = vec3(0.6, 0.55, 0.75) * band * (0.3 + 0.5 * fbm(p * 3.0)) * lanes;
+
+  // Nebulae: emission clouds in pink and teal
+  vec3 neb = vec3(0.9, 0.25, 0.4) * smoothstep(0.5, 0.9, fbm(p * 1.3 + vec2(4.0, t))) * 0.3;
+  neb += vec3(0.2, 0.6, 0.9) * fbm(p * 1.7 + vec2(-3.0, 2.0)) * 0.22;
+
+  // Distant spiral galaxy, tilted, with arms
+  vec2 gd = mat2(0.7, -0.7, 0.7, 0.7) * (p - vec2(-1.1, 0.5));
+  gd.y *= 2.6;
+  float gr = length(gd);
+  float gth = atan(gd.y, gd.x);
+  float arms = 0.5 + 0.5 * cos(2.0 * gth - log(gr + 0.01) * 4.0);
+  float galaxy = exp(-gr * gr * 30.0) + arms * exp(-gr * 4.0) * 0.35;
+  vec3 galCol = vec3(1.0, 0.9, 0.75) * galaxy * 0.8;
+
+  // Gas giant with banded clouds and a soft atmosphere
+  vec2 pc = vec2(0.95, -0.5);
+  vec2 pd = (p - pc) / 0.28;
+  float pr = length(pd);
+  vec3 planet = vec3(0.0);
+  if (pr < 1.0) {
+    float z = sqrt(1.0 - pr * pr);
+    vec3 nrm = vec3(pd, z);
+    vec3 L = normalize(vec3(-0.6, 0.5, 0.6));
+    float diff = max(dot(nrm, L), 0.0);
+    float bands = 0.5 + 0.5 * sin((pd.y + noise(pd * 3.0) * 0.12) * 18.0);
+    vec3 surf = mix(vec3(0.85, 0.6, 0.4), vec3(0.55, 0.32, 0.18), bands);
+    planet = surf * (0.03 + diff * 1.1);
+  }
+  float rim = smoothstep(1.25, 1.0, pr) * (1.0 - smoothstep(1.0, 1.02, pr) * 0.0);
+  planet += vec3(0.35, 0.55, 1.0) * rim * 0.12 * (1.0 - step(1.0, pr));
+  float planetMask = smoothstep(1.0, 0.99, pr);
+
+  // Stars: a dense field, plus brighter sparse stars
+  float starField = stars(p + 5.0, 60.0, 0.975) + stars(p + 1.0, 25.0, 0.992) * 1.4;
+  vec3 starCol = vec3(starField) * vec3(0.9, 0.95, 1.0);
+
+  vec3 col = vec3(0.01, 0.014, 0.03);
+  col += milky + neb + galCol + starCol * (0.6 + band);
+  col = mix(col, planet, planetMask);
+  col = col / (1.0 + col * 0.5);
+  col *= smoothstep(2.4, 0.5, length(p));
+  gl_FragColor = vec4(pow(col, vec3(0.95)), 1.0);
+}
+`;
+  // Previous black hole background, kept for reference
+  const BH_FRAG = `
+precision highp float;
+uniform float uTime;
+uniform float uProg;
+uniform vec2 uRes;
+varying vec2 vUv;
+float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }
+float noise(vec2 p){
+  vec2 i = floor(p); vec2 f = fract(p); f = f * f * (3.0 - 2.0 * f);
+  return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x), mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y);
+}
+float fbm(vec2 p){ float v = 0.0; float a = 0.5; for (int i = 0; i < 5; i++){ v += a * noise(p); p *= 2.03; a *= 0.5; } return v; }
+float stars(vec2 uv, float scale){
+  vec2 g = floor(uv * scale); vec2 f = fract(uv * scale);
+  float h = hash(g);
+  vec2 pos = vec2(hash(g + 1.7), hash(g + 3.1));
+  float d = length(f - pos);
+  float s = smoothstep(0.06, 0.0, d) * step(0.97, h);
+  return s * (0.4 + 0.6 * hash(g + 9.0));
+}
+void main(){
+  vec2 p = (vUv - 0.5) * vec2(uRes.x / uRes.y, 1.0) * 2.0;
+  vec2 c = vec2(-0.35 + 0.15 * sin(uProg * 3.14159), 0.05);
+  vec2 d = p - c;
+  float r = max(length(d), 0.0001);
+  vec2 n = d / r;
+  float rs = 0.2;
+  vec2 sp = c + n * (r + rs * rs * 0.55 / r);
+  float field = stars(sp + 4.0, 70.0) + 0.6 * stars(sp + 11.0, 26.0);
+  vec3 neb = vec3(0.10, 0.04, 0.16) * fbm(sp * 2.0 + 3.0) + vec3(0.02, 0.05, 0.09) * fbm(sp * 4.0 - 2.0);
+  vec3 col = vec3(field) * vec3(0.9, 0.95, 1.0) + neb;
+  float shadow = smoothstep(rs * 0.9, rs * 1.04, r);
+  col *= shadow;
+  vec2 dd = vec2(d.x, d.y / 0.28);
+  float rr = max(length(dd), 0.0001);
+  float ang = atan(dd.y, dd.x);
+  float rin = rs * 1.4; float rout = rs * 4.0;
+  float edge = smoothstep(rin, rin * 1.08, rr) * smoothstep(rout, rout * 0.7, rr);
+  float temp = pow(rin / rr, 1.3);
+  float turb = fbm(vec2(ang * 3.0 - uTime * 0.7 + rr * 4.0, rr * 14.0 + uTime * 0.12));
+  float beam = pow(0.45 + 0.55 * cos(ang), 2.2);
+  vec3 hot = vec3(1.0, 0.92, 0.78);
+  vec3 mid = vec3(1.0, 0.55, 0.16);
+  vec3 cool = vec3(0.45, 0.1, 0.02);
+  vec3 tint = mix(cool, mix(mid, hot, clamp(temp, 0.0, 1.0)), smoothstep(0.1, 0.6, temp));
+  vec3 disk = tint * edge * temp * (0.35 + 1.1 * turb) * beam * 2.4;
+  disk *= smoothstep(rs * 0.95, rs * 1.1, rr);
+  col += disk;
+  float ring = exp(-pow((r - rs * 1.45) / (rs * 0.045), 2.0));
+  col += vec3(1.0, 0.82, 0.55) * ring * 1.6 * shadow;
+  col += vec3(1.0, 0.5, 0.18) * exp(-(r - rs) * 9.0) * 0.18 * shadow;
+  col = col / (1.0 + col * 0.6);
+  col *= smoothstep(2.2, 0.6, length(p));
+  gl_FragColor = vec4(pow(col, vec3(0.95)), 1.0);
+}
+`;
+  const bgScene = new THREE.Scene();
+  const bgCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+  const bgMat = new THREE.ShaderMaterial({
+    uniforms: {
+      uTime: { value: 0 },
+      uProg: { value: 0 },
+      uRes: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }
+    },
+    vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }',
+    fragmentShader: SPACE_FRAG,
+    depthWrite: false,
+    depthTest: false
+  });
+  bgScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), bgMat));
+
+  // Studio environment for realistic reflections on the metal and glass
+  const envScene = new THREE.Scene();
+  envScene.background = new THREE.Color(0x05070d);
+  function addPanel(x, y, z, w, h, color, intensity) {
+    const m = new THREE.Mesh(
+      new THREE.PlaneGeometry(w, h),
+      new THREE.MeshBasicMaterial({ color: new THREE.Color(color).multiplyScalar(intensity), side: THREE.DoubleSide })
+    );
+    m.position.set(x, y, z);
+    m.lookAt(0, 0, 0);
+    envScene.add(m);
+  }
+  addPanel(0, 4, 3, 6, 3, 0xffffff, 2.0);
+  addPanel(-5, 0, 2, 3, 6, 0x2dd4bf, 1.2);
+  addPanel(5, -1, 1, 3, 6, 0x8b5cf6, 1.0);
+  addPanel(0, -4, 0, 8, 2, 0xffffff, 0.4);
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  const envTex = pmrem.fromScene(envScene, 0.04).texture;
+
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.Fog(0x05070d, 7, 17);
+  const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+  camera.position.set(0, 0, 6);
+
+  scene.add(new THREE.AmbientLight(0xffffff, 0.35));
+  const dir = new THREE.DirectionalLight(0xffffff, 0.5);
+  dir.position.set(0, 4, 6);
+  scene.add(dir);
+  const keyA = new THREE.PointLight(0x2dd4bf, 2.4, 22); keyA.position.set(4, 3, 4); scene.add(keyA);
+  const keyB = new THREE.PointLight(0x8b5cf6, 1.8, 22); keyB.position.set(-4, -2, 3); scene.add(keyB);
+  const keyC = new THREE.PointLight(0xf59e0b, 1.2, 22); keyC.position.set(0, 4, -3); scene.add(keyC);
+
+  function roundedRectShape(w, h, r) {
+    const x = -w / 2, y = -h / 2;
+    const s = new THREE.Shape();
+    s.moveTo(x + r, y);
+    s.lineTo(x + w - r, y);
+    s.quadraticCurveTo(x + w, y, x + w, y + r);
+    s.lineTo(x + w, y + h - r);
+    s.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    s.lineTo(x + r, y + h);
+    s.quadraticCurveTo(x, y + h, x, y + h - r);
+    s.lineTo(x, y + r);
+    s.quadraticCurveTo(x, y, x + r, y);
+    return s;
+  }
+  function rrect(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+  function drawScreen(ctx, W, H) {
+    ctx.fillStyle = '#0a1020'; ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = '#111a2e'; ctx.fillRect(0, 0, W, 70);
+    [['#ff5f57', 34], ['#febc2e', 64], ['#28c840', 94]].forEach(([c, x]) => {
+      ctx.fillStyle = c; ctx.beginPath(); ctx.arc(x, 35, 9, 0, Math.PI * 2); ctx.fill();
+    });
+    ctx.fillStyle = '#0a1020'; rrect(ctx, 180, 22, W - 360, 26, 13); ctx.fill();
+    const g = ctx.createLinearGradient(60, 110, W - 60, 340);
+    g.addColorStop(0, '#2dd4bf'); g.addColorStop(1, '#8b5cf6');
+    ctx.fillStyle = g; rrect(ctx, 60, 110, W - 120, 230, 24); ctx.fill();
+    ctx.fillStyle = 'rgba(255,255,255,0.92)'; rrect(ctx, 110, 160, 380, 44, 10); ctx.fill();
+    ctx.fillStyle = 'rgba(255,255,255,0.55)'; rrect(ctx, 110, 225, 260, 22, 10); ctx.fill();
+    ctx.fillStyle = '#ffffff'; rrect(ctx, 110, 275, 180, 46, 23); ctx.fill();
+    const cw = (W - 120 - 40) / 3;
+    for (let i = 0; i < 3; i++) {
+      const x = 60 + i * (cw + 20);
+      ctx.fillStyle = 'rgba(255,255,255,0.06)'; rrect(ctx, x, 380, cw, 200, 18); ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,0.12)'; ctx.lineWidth = 2; rrect(ctx, x, 380, cw, 200, 18); ctx.stroke();
+      ctx.fillStyle = 'rgba(45,212,191,0.8)'; ctx.beginPath(); ctx.arc(x + 46, 430, 22, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = 'rgba(255,255,255,0.4)'; rrect(ctx, x + 26, 480, cw - 52, 16, 8); ctx.fill();
+      rrect(ctx, x + 26, 510, cw - 90, 12, 6); ctx.fill();
+    }
+  }
+
+  const group = new THREE.Group();
+  scene.add(group);
+
+  // Laptop: aluminium base and lid, with a 4K (3840x2160) screen
+  const model = new THREE.Group();
+  group.add(model);
+  model.rotation.x = 0.3;
+
+  // Brushed-aluminium micro-roughness
+  const nc = document.createElement('canvas');
+  nc.width = 512; nc.height = 512;
+  const nx = nc.getContext('2d');
+  const nd = nx.createImageData(512, 512);
+  for (let i = 0; i < nd.data.length; i += 4) {
+    const v = 150 + (Math.random() - 0.5) * 70;
+    nd.data[i] = nd.data[i + 1] = nd.data[i + 2] = v; nd.data[i + 3] = 255;
+  }
+  nx.putImageData(nd, 0, 0);
+  const roughTex = new THREE.CanvasTexture(nc);
+  roughTex.wrapS = roughTex.wrapT = THREE.RepeatWrapping;
+  roughTex.repeat.set(3, 3);
+
+  // Matte black gaming-laptop chassis, lit by the studio environment
+  const bodyMat = new THREE.MeshPhysicalMaterial({
+    color: 0x14161b, metalness: 0.35, roughness: 0.5, roughnessMap: roughTex,
+    clearcoat: 0.35, clearcoatRoughness: 0.35,
+    envMap: envTex, envMapIntensity: 0.8
+  });
+  const darkMat = new THREE.MeshStandardMaterial({ color: 0x07090f, roughness: 0.6 });
+  const shapeOpts = { depth: 0.06, bevelEnabled: true, bevelThickness: 0.035, bevelSize: 0.035, bevelSegments: 8, curveSegments: 24 };
+
+  // Base lies flat; its thickness runs along +Y
+  const baseGeo = new THREE.ExtrudeGeometry(roundedRectShape(2.6, 1.8, 0.1), shapeOpts);
+  baseGeo.center();
+  const base = new THREE.Mesh(baseGeo, bodyMat);
+  base.rotation.x = -Math.PI / 2;
+  base.position.y = 0.065;
+  model.add(base);
+
+  // Lid hinges at the back edge of the base
+  const lidPivot = new THREE.Group();
+  lidPivot.position.set(0, 0.13, -0.9);
+  lidPivot.rotation.x = -0.3;
+  model.add(lidPivot);
+
+  const lidGeo = new THREE.ExtrudeGeometry(roundedRectShape(2.6, 1.7, 0.1), shapeOpts);
+  lidGeo.center();
+  const lid = new THREE.Mesh(lidGeo, bodyMat);
+  lid.position.set(0, 0.85, 0);
+  lidPivot.add(lid);
+
+  const bezel = new THREE.Mesh(new THREE.PlaneGeometry(2.5, 1.6), darkMat);
+  bezel.position.set(0, 0.85, 0.067);
+  lidPivot.add(bezel);
+
+  // Webcam at the top of the bezel
+  const cam = new THREE.Mesh(new THREE.CylinderGeometry(0.016, 0.016, 0.01, 20), darkMat);
+  cam.rotation.x = Math.PI / 2;
+  cam.position.set(0, 1.67, 0.068);
+  lidPivot.add(cam);
+
+  const maxTex = renderer.capabilities.maxTextureSize;
+  const SW = Math.min(3840, maxTex);
+  const SH = Math.round(SW * 9 / 16);
+  const screenCanvas = document.createElement('canvas');
+  screenCanvas.width = SW; screenCanvas.height = SH;
+  drawScreen4K(screenCanvas.getContext('2d'), SW, SH);
+  const screenTex = new THREE.CanvasTexture(screenCanvas);
+  screenTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  const screen = new THREE.Mesh(
+    new THREE.PlaneGeometry(2.4, 1.35),
+    new THREE.MeshBasicMaterial({ map: screenTex, toneMapped: false })
+  );
+  screen.position.set(0, 0.85, 0.071);
+  lidPivot.add(screen);
+
+  // Glossy glass cover over the screen, reflecting the studio
+  const glass = new THREE.Mesh(
+    new THREE.PlaneGeometry(2.4, 1.35),
+    new THREE.MeshPhysicalMaterial({
+      color: 0x000000, transparent: true, opacity: 0.12, roughness: 0.05,
+      clearcoat: 1, clearcoatRoughness: 0.02, envMap: envTex, envMapIntensity: 1.5
+    })
+  );
+  glass.position.set(0, 0.85, 0.0715);
+  lidPivot.add(glass);
+
+  // Keyboard and trackpad on the base
+  const kbCanvas = document.createElement('canvas');
+  kbCanvas.width = 3072; kbCanvas.height = 1280;
+  drawKeyboard(kbCanvas.getContext('2d'), 3072, 1280);
+  const keyboard = new THREE.Mesh(
+    new THREE.PlaneGeometry(2.15, 0.86),
+    new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(kbCanvas), transparent: true })
+  );
+  keyboard.rotation.x = -Math.PI / 2;
+  keyboard.position.set(0, 0.131, -0.42);
+  model.add(keyboard);
+
+  const trackpad = new THREE.Mesh(
+    new THREE.PlaneGeometry(0.95, 0.5),
+    new THREE.MeshPhysicalMaterial({ color: 0x1b202b, roughness: 0.35, metalness: 0.3 })
+  );
+  trackpad.rotation.x = -Math.PI / 2;
+  trackpad.position.set(0, 0.131, 0.55);
+  model.add(trackpad);
+
+  function drawScreen4K(ctx, W, H) {
+    const k = W / 1600;
+    ctx.setTransform(k, 0, 0, k, 0, 0);
+    const w = 1600;
+    ctx.fillStyle = '#0a1020'; ctx.fillRect(0, 0, w, 900);
+    ctx.fillStyle = '#111a2e'; ctx.fillRect(0, 0, w, 64);
+    [['#ff5f57', 36], ['#febc2e', 64], ['#28c840', 92]].forEach(([c, x]) => {
+      ctx.fillStyle = c; ctx.beginPath(); ctx.arc(x, 32, 8, 0, Math.PI * 2); ctx.fill();
+    });
+    ctx.fillStyle = '#0a1020'; rrect(ctx, 300, 18, 1000, 28, 14); ctx.fill();
+    ctx.fillStyle = 'rgba(255,255,255,0.08)'; ctx.fillRect(0, 64, w, 56);
+    ctx.fillStyle = '#2dd4bf'; ctx.font = '800 26px Inter, Segoe UI, system-ui, sans-serif';
+    ctx.textBaseline = 'middle'; ctx.fillText('VERQEN', 60, 92);
+    ctx.fillStyle = 'rgba(255,255,255,0.7)'; ctx.font = '500 22px Inter, Segoe UI, system-ui, sans-serif';
+    ctx.fillText('Services', 880, 92); ctx.fillText('Tarifs', 1000, 92); ctx.fillText('Contact', 1110, 92);
+    const g = ctx.createLinearGradient(820, 170, 1500, 620);
+    g.addColorStop(0, '#2dd4bf'); g.addColorStop(1, '#8b5cf6');
+    ctx.fillStyle = g; rrect(ctx, 820, 170, 680, 460, 36); ctx.fill();
+    ctx.textBaseline = 'top';
+    ctx.fillStyle = '#ffffff'; ctx.font = '800 92px Inter, Segoe UI, system-ui, sans-serif';
+    ctx.fillText('VERQEN', 80, 190);
+    ctx.fillStyle = 'rgba(255,255,255,0.85)'; ctx.font = '400 32px Inter, Segoe UI, system-ui, sans-serif';
+    ctx.fillText('Votre site web professionnel,', 84, 320);
+    ctx.fillText('à partir de 500 TND.', 84, 366);
+    ctx.fillStyle = '#ffffff'; rrect(ctx, 84, 450, 300, 72, 36); ctx.fill();
+    ctx.fillStyle = '#0a1020'; ctx.font = '700 28px Inter, Segoe UI, system-ui, sans-serif';
+    ctx.textBaseline = 'middle'; ctx.fillText('Commencer', 134, 486); ctx.textBaseline = 'top';
+    const cw = (1400 - 60) / 3;
+    for (let i = 0; i < 3; i++) {
+      const x = 100 + i * (cw + 30);
+      ctx.fillStyle = 'rgba(255,255,255,0.06)'; rrect(ctx, x, 690, cw, 150, 22); ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,0.14)'; ctx.lineWidth = 2; rrect(ctx, x, 690, cw, 150, 22); ctx.stroke();
+      ctx.fillStyle = 'rgba(45,212,191,0.85)'; ctx.beginPath(); ctx.arc(x + 50, 740, 22, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = 'rgba(255,255,255,0.45)'; rrect(ctx, x + 30, 790, cw - 60, 14, 7); ctx.fill();
+      rrect(ctx, x + 30, 815, cw - 110, 12, 6); ctx.fill();
+    }
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+  }
+
+  function drawKeyboard(ctx, W, H) {
+    ctx.clearRect(0, 0, W, H);
+    const rows = [13, 13, 12, 11, 4];
+    const pad = 24, gap = 10;
+    const kh = (H - pad * 2 - gap * (rows.length - 1)) / rows.length;
+    rows.forEach((n, r) => {
+      const kw = (W - pad * 2 - gap * (n - 1)) / n;
+      for (let i = 0; i < n; i++) {
+        const x = pad + i * (kw + gap), y = pad + r * (kh + gap);
+        ctx.fillStyle = '#0b0d12'; rrect(ctx, x, y, kw, kh, 14); ctx.fill();
+        ctx.strokeStyle = 'rgba(64,220,255,0.95)'; ctx.lineWidth = 4; rrect(ctx, x + 2, y + 2, kw - 4, kh - 4, 12); ctx.stroke();
+        ctx.fillStyle = 'rgba(64,220,255,0.22)'; rrect(ctx, x, y, kw, kh * 0.5, 14); ctx.fill();
+      }
+    });
+  }
+
+  const ringMat = new THREE.MeshBasicMaterial({ color: 0x2dd4bf, transparent: true, opacity: 0.85 });
+  const ring = new THREE.Mesh(new THREE.TorusGeometry(1.9, 0.012, 16, 160), ringMat);
+  ring.rotation.x = Math.PI / 2.4;
+  group.add(ring);
+
+  const ring2Mat = new THREE.MeshBasicMaterial({ color: 0x2dd4bf, transparent: true, opacity: 0.35 });
+  const ring2 = new THREE.Mesh(new THREE.TorusGeometry(2.25, 0.008, 16, 160), ring2Mat);
+  ring2.rotation.set(Math.PI / 2.1, 0.4, 0);
+  group.add(ring2);
+
+  const orbMat = new THREE.MeshStandardMaterial({ color: 0xffffff, metalness: 0.9, roughness: 0.15 });
+  const orbs = [];
+  for (let i = 0; i < 3; i++) {
+    const o = new THREE.Mesh(new THREE.SphereGeometry(0.08, 24, 24), orbMat);
+    o.userData.offset = (i / 3) * Math.PI * 2;
+    scene.add(o);
+    orbs.push(o);
+  }
+
+  const COUNT = reduce ? 500 : 1400;
+  const positions = new Float32Array(COUNT * 3);
+  const vy = new Float32Array(COUNT);
+  for (let i = 0; i < COUNT; i++) {
+    positions[i * 3]     = (Math.random() - 0.5) * 18;
+    positions[i * 3 + 1] = (Math.random() - 0.5) * 12;
+    positions[i * 3 + 2] = -6 + Math.random() * 8;
+    vy[i] = 0.002 + Math.random() * 0.006;
+  }
+  const pGeo = new THREE.BufferGeometry();
+  pGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const pMat = new THREE.PointsMaterial({ size: 0.035, color: 0xffffff, transparent: true, opacity: 0.7, depthWrite: false });
+  const pGroup = new THREE.Group();
+  const points = new THREE.Points(pGeo, pMat);
+  pGroup.add(points);
+  scene.add(pGroup);
+
+  // Keyframes: one per section (Hero, Services, Why, Pricing, Contact, Footer)
+  const KF = [
+    { p: [1.3, 0.1, 0],     r: [0.15, 0.4, 0],    s: 1.0,  c: new THREE.Color(0x2dd4bf) },
+    { p: [2.5, -0.2, -0.6], r: [0.35, -0.9, 0.1], s: 0.9,  c: new THREE.Color(0x38bdf8) },
+    { p: [-2.5, 0.35, 0.2], r: [0.6, 1.1, -0.35], s: 0.95, c: new THREE.Color(0x8b5cf6) },
+    { p: [0, -0.2, -0.8],   r: [0.15, 2.4, 0],    s: 1.0,  c: new THREE.Color(0xf59e0b) },
+    { p: [0, 0.1, 0.8],     r: [0, 3.9, 0],       s: 1.1,  c: new THREE.Color(0x10b981) },
+    { p: [1.3, 0.1, 0],     r: [0.15, 4.5, 0],    s: 1.0,  c: new THREE.Color(0x2dd4bf) }
+  ];
+  const isMobile = () => window.innerWidth < 760;
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const tgtPos = new THREE.Vector3();
+  const tgtRot = new THREE.Vector3();
+  const tgtColor = new THREE.Color();
+  let tgtScale = 1;
+
+  function sample(t) {
+    const n = KF.length - 1;
+    const c = Math.min(Math.max(t, 0), n - 0.001);
+    const i = Math.floor(c);
+    const f = c - i;
+    const s = f * f * (3 - 2 * f); // smoothstep
+    const a = KF[i], b = KF[i + 1];
+    const xMul = isMobile() ? 0.3 : 1;
+    tgtPos.set(lerp(a.p[0], b.p[0], s) * xMul, lerp(a.p[1], b.p[1], s), lerp(a.p[2], b.p[2], s));
+    tgtRot.set(lerp(a.r[0], b.r[0], s), lerp(a.r[1], b.r[1], s), lerp(a.r[2], b.r[2], s));
+    tgtScale = lerp(a.s, b.s, s) * (isMobile() ? 0.7 : 1);
+    tgtColor.copy(a.c).lerp(b.c, s);
+  }
+
+  let prog = 0, lastProg = 0, speedS = 0;
+  let curScale = 1, time = 0, last = performance.now();
+  const curColor = new THREE.Color(0x2dd4bf);
+  const white = new THREE.Color(0xffffff);
+  const tmpColor = new THREE.Color();
+
+  function onResize() {
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight, false);
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    bgMat.uniforms.uRes.value.set(window.innerWidth, window.innerHeight);
+  }
+  window.addEventListener('resize', onResize);
+  onResize();
+
+  function frame(now) {
+    requestAnimationFrame(frame);
+    const dt = Math.min((now - last) / 1000, 0.05);
+    last = now;
+    time += dt * (reduce ? 0.3 : 1);
+
+    const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    const target = window.scrollY / max;
+    prog += (target - prog) * 0.08;
+    progressEl.style.transform = 'scaleX(' + prog.toFixed(4) + ')';
+
+    const delta = prog - lastProg;
+    lastProg = prog;
+    speedS += (Math.min(Math.abs(delta) * 90, 3) - speedS) * 0.1;
+
+    const t = prog * 5;
+    sample(t);
+    const burst = Math.exp(-Math.pow(t - 3, 2) * 2.5); // pricing burst
+
+    group.position.x += (tgtPos.x - group.position.x) * 0.08;
+    group.position.y += (tgtPos.y + Math.sin(time * 0.9) * 0.06 - group.position.y) * 0.08;
+    group.position.z += (tgtPos.z - group.position.z) * 0.08;
+
+    const wob = Math.sin(time * 0.4) * 0.04;
+    group.rotation.x += (tgtRot.x + wob - group.rotation.x) * 0.08;
+    group.rotation.y += (tgtRot.y + wob - group.rotation.y) * 0.08;
+    group.rotation.z += (tgtRot.z - group.rotation.z) * 0.08;
+
+    curScale += (tgtScale - curScale) * 0.08;
+    group.scale.setScalar(curScale * (1 + Math.sin(time * 5) * 0.04 * burst));
+
+    curColor.lerp(tgtColor, 0.06);
+    // The laptop keeps its black chassis and cyan keyboard glow in every section
+    ringMat.color.copy(curColor);
+    ring2Mat.color.copy(curColor);
+    orbMat.color.copy(white).lerp(curColor, 0.25);
+    keyA.color.copy(curColor);
+    tmpColor.copy(curColor).lerp(white, 0.4);
+    pMat.color.copy(tmpColor);
+
+    ring.rotation.z += dt * 0.2;
+    ring2.rotation.y += dt * 0.12;
+    orbs.forEach(o => {
+      const a = time * 0.8 + o.userData.offset;
+      o.position.set(group.position.x + Math.cos(a) * 1.9 * curScale,
+                     group.position.y + Math.sin(a * 0.6) * 0.25,
+                     group.position.z + Math.sin(a) * 0.76);
+    });
+
+    const speedMul = (reduce ? 0.3 : 1) * (1 + speedS * 4 + burst * 5);
+    const arr = pGeo.attributes.position.array;
+    for (let i = 0; i < COUNT; i++) {
+      arr[i * 3 + 1] += vy[i] * speedMul;
+      arr[i * 3]     += Math.sin(time + i) * 0.0008 * speedMul;
+      if (arr[i * 3 + 1] > 6) arr[i * 3 + 1] = -6;
+    }
+    pGeo.attributes.position.needsUpdate = true;
+    points.rotation.y += 0.0004 * (1 + speedS * 6);
+    pGroup.scale.setScalar(1 + burst * 0.3);
+
+    camera.position.z = 6 - burst * 0.4;
+    bgMat.uniforms.uTime.value = time;
+    bgMat.uniforms.uProg.value = prog;
+    renderer.clear();
+    renderer.render(bgScene, bgCam);
+    renderer.clearDepth();
+    renderer.render(scene, camera);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
